@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: test-flappybird-game-svc
+  name: test-flappybird-game-svc
+  namespace: flappybird-namespace
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: flappybird-game

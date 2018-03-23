@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: test-flappybird-game-svc-1
+  name: test-flappybird-game-svc-1
+  namespace: flappybird-namespace
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 3000
+  selector:
+    app: monitoring-grafana-2
