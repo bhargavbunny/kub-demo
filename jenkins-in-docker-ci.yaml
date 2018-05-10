@@ -1,0 +1,69 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: jenkins-ci
+  namespace: jenkins-workspace
+spec: 
+  replicas: 1
+  template: 
+    metadata: 
+      labels: 
+        name: jenkins-ci
+    spec: 
+      containers: 
+        - 
+          image: bhargavbunny94/jenkins-bhargav
+          imagePullPolicy: Always
+          name: jenkins-ci
+          ports: 
+            - 
+              containerPort: 8080
+            - 
+              containerPort: 50000
+          readinessProbe: 
+            initialDelaySeconds: 40
+            periodSeconds: 20
+            tcpSocket: 
+              port: 8080
+          securityContext: 
+            privileged: true
+          volumeMounts: 
+            - 
+              mountPath: /var/run/docker.sock
+              name: docker-sock
+            - 
+              mountPath: /var/jenkins_home
+              name: jenkins-home
+            - 
+              mountPath: /usr/bin/docker
+              name: docker
+            - 
+              mountPath: /usr/lib/x86_64-linux-gnu/libdevmapper.so.1.02
+              name: libdevmapper
+            - 
+              mountPath: /usr/lib/x86_64-linux-gnu/libudev.so.0
+              name: libudev
+      imagePullSecrets: 
+        - 
+          name: regsecret
+      volumes: 
+        - 
+          hostPath: 
+            path: /var/run/docker.sock
+          name: docker-sock
+        - 
+          hostPath: 
+            path: /var/jenkins_home
+          name: jenkins-home
+        - 
+          hostPath: 
+            path: /usr/bin/docker
+          name: docker
+        - 
+          hostPath: 
+            path: /usr/lib/x86_64-linux-gnu/libdevmapper.so.1.02
+          name: libdevmapper
+        - 
+          hostPath: 
+            path: /usr/lib/x86_64-linux-gnu/libudev.so.0
+          name: libudev
