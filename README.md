@@ -9,3 +9,6 @@ docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/u
 # TO SET A NAMESPACE AS DEFAULT NAMESPACE IN KUBERNETES
 
 kubectl config set-context $(kubectl config current-context) --namespace=flappybird-namespace
+
+# kubernetes autoscaling pods
+kubectl autoscale deployment <deployment-name> --min=2 --max=5 --cpu-percent=80
